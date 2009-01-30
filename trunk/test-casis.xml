@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<schema>
+	
+	<sequence name="s_ref_alert_risk_levels" initialValue="1" incrementBy="1" cycling="false"/>
+	<table name="ref_alert_risk_levels">
+		<column name="arl_id" type="number" size="18" autoIncrement="true"/>
+		<column name="name" type="varchar" size="30" nullable="false" description="coucou"/>
+		<column name="descr" type="varchar" size="300"/>
+		<primary-key name="arl_pk">
+			<column-ref name="arl_id"/>
+		</primary-key>
+		<unique-constraint name="arl_name_un">
+			<column-ref name="name"/>
+		</unique-constraint>
+	</table>
+		
+	<sequence name="s_ref_alert_status" initialValue="1" incrementBy="1" cycling="false"/>
+	<table name="ref_alert_status">
+		<column name="ast_id" type="number" size="18" autoIncrement="true"/>
+		<column name="name" type="varchar" size="30" nullable="false" description="coucou"/>
+		<column name="descr" type="varchar" size="300"/>
+		<primary-key name="ast_pk">
+			<column-ref name="ast_id"/>
+		</primary-key>
+		<unique-constraint name="ast_name_un">
+			<column-ref name="name"/>
+		</unique-constraint>
+	</table>
+	
+	<sequence name="s_alerts" initialValue="1" incrementBy="1" cycling="false"/>
+	<table name="alerts">
+		<column name="alt_id" type="number" size="18" autoIncrement="true"/>
+		<column name="ade_id" type="number" size="18" nullable="false" description="coucou"/>
+		<column name="ast_id" type="number" size="18" nullable="false" description="coucou"/>
+		<column name="arl_id" type="number" size="18" nullable="false" description="coucou"/>
+		<column name="creation_time" type="timestamp" size="6" nullable="false" description="coucou"/>
+		<column name="origin_value" type="varchar" size="51" description="coucou"/>
+
+		<primary-key name="alt_pk">
+			<column-ref name="alt_id"/>
+		</primary-key>
+		<foreign-key name="alt_ast_fk">
+			<local-column-ref name="ast_id"/>
+			<foreign-column-ref table="ref_alert_status" name="ast_id"/>
+		</foreign-key>
+		<foreign-key name="alt_arl_fk">
+			<local-column-ref name="arl_id"/>
+			<foreign-column-ref table="ref_alert_risk_levels" name="arl_id"/>
+		</foreign-key>
+
+<!-- TODO
+
+	<decimal .../> - use type as element name (shortcut notation)
+	<primary-key><column></primary-key> - use columns instead of refs as pkey (shortcut notation)
+	@unique=true - constraint defined as a column attribute (shortcut notation). could even specify the name of the constraint
+	@pk=true - constraint defined as a column attribute (shortcut notation). could even specify the name of the constraint
+       ,ade_id         number(18)
+       						constraint alt_ade_nn not null
+							constraint alt_ade_fk references alert_definitions (ade_id)
+							-->
+	</table>	
+	
+	<view name="v1">
+		select * from events
+	</view>
+	<view name="v1">
+		select * from events
+	</view>
+</schema>

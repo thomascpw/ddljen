@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/velocity-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.13.jar"/>
+	<classpathentry kind="lib" path="lib/commons-betwixt-0.7.jar"/>
+	<classpathentry kind="lib" path="lib/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-cli-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/ant-1.6.5.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/jaxen-1.0-FCS-full.jar"/>
+	<classpathentry kind="lib" path="lib/saxpath-1.0-FCS.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

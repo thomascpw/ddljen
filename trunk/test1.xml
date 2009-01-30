@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<schema>
+	<sequence name="s_sequence" initialValue="1" incrementBy="1" cycling="false"/>
+	<table name="t1">
+		<column name="id" autoIncrement="true" type="integer" size="18"/>
+		<column name="ac2" type="numeric" size="4" precision="2" description="coucou"/>
+		<column name="ac1" type="varchar" size="20" unique="true"/>
+		<primary-key name="t_pk">
+			<column-ref name="id"/>
+		</primary-key>
+		<foreign-key name="t_fk_id">
+			<local-column-ref name="ac2"/>
+			<foreign-column-ref table="abc" name="abc.id"/>
+		</foreign-key>
+		<unique-constraint name="t_un">
+			<column-ref name="ac1"/>
+			<column-ref name="ac2"/>
+		</unique-constraint>
+	</table>
+</schema>

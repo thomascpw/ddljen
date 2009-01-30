@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ddljen" default="build">
+
+	<!-- PROPERTIES -->
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="src.java.dir" value="${src.dir}" />
+	<property name="src.test.dir" value="${src.dir}/test" />
+	<property name="src.conf.dir" value="${src.dir}/conf" />
+	<property name="lib.dir" value="lib" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="build.classes.dir" value="${build.dir}/classes" />
+	
+	<property file="build.properties"/>
+
+
+	<!-- CLASS-PATHS -->
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- BUILD -->
+	<!-- main build sequence -->
+	<target name="build" 
+			description="" 
+			depends="init, compile, copy-resources, jar" />
+	<target name="rebuild" 
+			description="" 
+			depends="clean, build" />
+	
+	
+	<!-- INIT -->
+	<target name="init" description="">
+		<mkdir dir="${build.classes.dir}" />
+	</target>
+	
+	
+	<!-- CLEAN -->
+	<target name="clean" description="Deletes all build generated directories">
+		<delete dir="${build.dir}" failonerror="false" />
+	</target>
+	
+
+	<!-- COMPILE -->
+	<target name="compile" 
+			description="" 
+			depends="init">
+		<javac srcdir="${src.java.dir}" destdir="${build.classes.dir}" debug="on">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="copy-resources">
+		<copy todir="${build.classes.dir}">
+			<fileset dir="${src.java.dir}" includes="**/*.xml"/>
+			<fileset dir="${src.java.dir}" includes="**/*.properties"/>
+			<fileset dir="${src.java.dir}" includes="**/*.vm"/>
+		</copy>
+	</target>
+	
+	<!-- JAR PACKAGING -->
+	<target name="jar">
+		<jar destfile="${build.dir}/ddljen.jar" duplicate="fail">
+			<fileset dir="${build.classes.dir}">
+			</fileset>
+			<manifest>
+				<attribute name="Implementation-Title" value="${ant.project.name}" />
+				<attribute name="Implementation-Version" value="${product.version}" />
+				<attribute name="Implementation-Vendor" value="${org.name}" />
+			</manifest>
+		</jar>
+	</target>
+
+	
+	<!-- JAVADOC -->
+	<target name="javadoc" description="Build Javadoc">
+        <mkdir dir="${javadoc.dir}"/>
+        <javadoc 
+			destdir="${javadoc.dir}" 
+			author="false"
+			source="1.4" 
+			failonerror="true" 
+			useexternalfile="true">
+            <fileset dir="${src.java.dir}"/>
+        </javadoc>
+    </target>
+ 
+	
+</project>

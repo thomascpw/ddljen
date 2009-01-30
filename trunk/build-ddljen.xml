@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ddljen" default="build">
+
+	<target name="build">
+		<taskdef name="ddljen" classname="org.ddljen.DDLJenTask">
+			<classpath>
+				<fileset dir="build">
+					<include name="ddljen.jar"/>
+				</fileset>
+				<fileset dir="lib">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+		</taskdef>
+		<ddljen database="oracle">
+			<fileset dir=".">
+				<include name="test-casis.xml"/>
+			</fileset>
+		</ddljen>
+	</target>
+	
+</project>
