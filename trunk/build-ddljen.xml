@@ -12,7 +12,7 @@
 				</fileset>
 			</classpath>
 		</taskdef>
-		<ddljen database="oracle">
+		<ddljen database="oracle" destFile="./ddljen-out.sql">
 			<fileset dir=".">
 				<include name="test-casis.xml"/>
 			</fileset>
