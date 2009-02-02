@@ -11,7 +11,6 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 
 public class DDLJen {
 
@@ -22,19 +21,18 @@ public class DDLJen {
 	public static void main(String[] args) throws Exception {
 		DDLJen ddljen = new DDLJen();
 		DDLJenOptions options = ddljen.parseCommandLine(args);
-		DDLJen.run(options.getSchemaFile(), options.getDatabase(), options.getVersion(), options.mustDrop(), options.getDestFile());
+		DDLJen.run(options.getSchemaFile(), options.getDialect(), options.mustDrop(), options.getDestFile());
 	}
 
-	public static void run(String schemaFile, String database, String version, boolean drop, String destFile) throws DDLJenException {
+	public static void run(String schemaFile, SQLDialect dialect, boolean drop, String destFile) throws DDLJenException {
 		File s = new File(schemaFile);
 		File d = new File(destFile);
-		DDLJen.run(s, database, version, drop, d);	
+		DDLJen.run(s, dialect, drop, d);	
 	}
 
-	public static void run(File schemaFile, String database, String version, boolean drop, File destFile) throws DDLJenException {
+	public static void run(File schemaFile, SQLDialect dialect, boolean drop, File destFile) throws DDLJenException {
 		DDLJen ddljen = new DDLJen();
 		Schema s = ddljen.readSchema(schemaFile);
-		SQLDialect dialect = new SQLDialect(database, version);
 		ddljen.mapTypes(s, dialect);
 		ddljen.generateSQL(s, dialect, drop, destFile);
 	}
@@ -55,10 +53,13 @@ public class DDLJen {
 				ddljenOptions.setSchemaFile(new File(commandLine.getOptionValue("f")));
 			}
 			if (commandLine.hasOption("db")) {
-				ddljenOptions.setDatabase(commandLine.getOptionValue("db"));
-			}
-			if (commandLine.hasOption("v")) {
-				ddljenOptions.setVersion(commandLine.getOptionValue("v"));
+				String dialectValue = commandLine.getOptionValue("db");
+				String versionValue = null;
+				if (commandLine.hasOption("v")) {
+					versionValue = commandLine.getOptionValue("v");
+				}
+				SQLDialect dialect = SQLDialectFactory.createDialect(dialectValue, versionValue);
+				ddljenOptions.setDialect(dialect);
 			}
 			if (commandLine.hasOption("o")) {
 				ddljenOptions.setDestFile(new File(commandLine.getOptionValue("o")));
@@ -66,7 +67,8 @@ public class DDLJen {
 			if (commandLine.hasOption("drop")) {
 				ddljenOptions.setDrop(true);
 			}
-		} catch( ParseException e ) {
+		} catch( Exception e ) {
+			// TODO: print clear error message
 			HelpFormatter formatter = new HelpFormatter();
 			formatter.printHelp( "ddljen", options );
 			System.exit(1);
@@ -124,28 +126,21 @@ public class DDLJen {
 
 	private class DDLJenOptions {
 		private File schemaFile = null;
-		private String database = null;
-		private String version = null;
+		private SQLDialect dialect = null;
 		private File destFile = null;
 		private boolean drop = false;
 
-		public String getDatabase() {
-			return database;
-		}
-		public void setDatabase(String database) {
-			this.database = database;
-		}
 		public File getSchemaFile() {
 			return schemaFile;
 		}
 		public void setSchemaFile(File schemaFile) {
 			this.schemaFile = schemaFile;
 		}
-		public String getVersion() {
-			return version;
+		public SQLDialect getDialect() {
+			return dialect;
 		}
-		public void setVersion(String version) {
-			this.version = version;
+		public void setDialect(SQLDialect dialect) {
+			this.dialect = dialect;
 		}
 		public File getDestFile() {
 			return destFile;
