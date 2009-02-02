@@ -69,7 +69,8 @@ public class DDLJenTask extends Task {
 			for (Iterator j = files.iterator(); j.hasNext();) {
 				File schemaFile = (File) j.next();
 			    try {
-					DDLJen.run(schemaFile, getDatabase(), getVersion(), mustDrop(), getDestFile());
+			    	SQLDialect dialect = SQLDialectFactory.createDialect(getDatabase(), getVersion());
+					DDLJen.run(schemaFile, dialect, mustDrop(), getDestFile());
 				} catch (DDLJenException e) {
 					throw new BuildException(e);
 				}				

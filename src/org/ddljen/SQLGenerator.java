@@ -34,7 +34,7 @@ public class SQLGenerator {
 	    velocityEngine.init(p);
 
 	    String templateFile = "org/ddljen/";
-	    templateFile += dialect.getName();
+	    templateFile += dialect.getName().toLowerCase();
 	    templateFile += "/template.vm";
 
 	    Template template = velocityEngine.getTemplate(templateFile);

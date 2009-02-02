@@ -2,16 +2,13 @@ package org.ddljen;
 
 public class SQLDialect {
 
-	public final static SQLDialect ORACLE = new SQLDialect("oracle", null);
-	public final static SQLDialect MYSQL = new SQLDialect("mysql", null);
-	
 	private String name = null;
 	private String version = null;
 	
-	public SQLDialect() {
+	SQLDialect() {
 	}
 
-	public SQLDialect(String name, String version) {
+	SQLDialect(String name, String version) {
 		this.name = name;
 		this.version = version;
 	}
@@ -32,5 +29,4 @@ public class SQLDialect {
 		this.version = version;
 	}
 
-	
 }
