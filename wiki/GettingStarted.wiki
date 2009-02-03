@@ -1,4 +1,4 @@
-<Todo>
+[Todo]
 
 === Pre-requisites===
   * Ant 1.6.5+
