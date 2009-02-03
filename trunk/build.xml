@@ -9,6 +9,9 @@
 	<property name="lib.dir" value="lib" />
 	<property name="build.dir" value="${basedir}/build" />
 	<property name="build.classes.dir" value="${build.dir}/classes" />
+	<property name="dist.dir" value="${basedir}/dist" />
+	
+	<property name="ddljen.version" value="0.1"/>
 	
 	<property file="build.properties"/>
 
@@ -24,7 +27,7 @@
 	<!-- main build sequence -->
 	<target name="build" 
 			description="" 
-			depends="init, compile, copy-resources, jar" />
+			depends="init, compile, copy-resources, jar, dist" />
 	<target name="rebuild" 
 			description="" 
 			depends="clean, build" />
@@ -33,12 +36,14 @@
 	<!-- INIT -->
 	<target name="init" description="">
 		<mkdir dir="${build.classes.dir}" />
+		<mkdir dir="${build.dir}" />
 	</target>
 	
 	
 	<!-- CLEAN -->
 	<target name="clean" description="Deletes all build generated directories">
 		<delete dir="${build.dir}" failonerror="false" />
+		<delete dir="${dist.dir}" failonerror="false" />
 	</target>
 	
 
@@ -61,13 +66,13 @@
 	
 	<!-- JAR PACKAGING -->
 	<target name="jar">
-		<jar destfile="${build.dir}/ddljen.jar" duplicate="fail">
+		<jar destfile="${build.dir}/ddljen-${ddljen.version}.jar" duplicate="fail">
 			<fileset dir="${build.classes.dir}">
 			</fileset>
 			<manifest>
-				<attribute name="Implementation-Title" value="${ant.project.name}" />
-				<attribute name="Implementation-Version" value="${product.version}" />
-				<attribute name="Implementation-Vendor" value="${org.name}" />
+				<attribute name="Implementation-Title" value="ddljen" />
+				<attribute name="Implementation-Version" value="${ddljen.version}" />
+				<attribute name="Implementation-Vendor" value="ddljen" />
 			</manifest>
 		</jar>
 	</target>
@@ -86,5 +91,19 @@
         </javadoc>
     </target>
  
+	<!-- DIST -->
+	<target name="dist" 
+		description="Prepare the application for distribution" 
+		depends="jar">
+		<copy file="build-ddljen.xml" tofile="${dist.dir}/build.xml"/>
+		<copy todir="${dist.dir}">
+			<fileset dir="${basedir}" includes="test*.xml"/>			
+			<fileset dir="${basedir}" includes="LICENSE.txt"/>			
+		</copy>
+		<copy todir="${dist.dir}/lib">
+			<fileset dir="${lib.dir}" includes="*.jar"/>
+			<fileset dir="${build.dir}" includes="ddljen-${ddljen.version}.jar"/>
+		</copy>
+	</target>
 	
 </project>
