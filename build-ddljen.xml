@@ -4,9 +4,6 @@
 	<target name="build">
 		<taskdef name="ddljen" classname="org.ddljen.DDLJenTask">
 			<classpath>
-				<fileset dir="build">
-					<include name="ddljen.jar"/>
-				</fileset>
 				<fileset dir="lib">
 					<include name="*.jar"/>
 				</fileset>
