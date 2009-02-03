@@ -104,6 +104,7 @@
 			<fileset dir="${lib.dir}" includes="*.jar"/>
 			<fileset dir="${build.dir}" includes="ddljen-${ddljen.version}.jar"/>
 		</copy>
+		<zip destfile="ddljen-${ddljen.version}.zip" basedir="${dist.dir}"/>
 	</target>
 	
 </project>
