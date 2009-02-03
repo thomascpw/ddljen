@@ -61,9 +61,9 @@
 	</table>	
 	
 	<view name="v1">
-		select * from events
+		select * from alerts
 	</view>
-	<view name="v1">
-		select * from events
+	<view name="v2">
+		select * from alerts
 	</view>
 </schema>
