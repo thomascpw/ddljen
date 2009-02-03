@@ -1,0 +1,4 @@
+= Getting Started=
+== Pre-requisites==
+  * Ant 1.6.5+
+  * Java 5+
