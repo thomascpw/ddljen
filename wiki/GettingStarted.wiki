@@ -1,6 +1,20 @@
 #labels Featured
 Todo
 
-=== Pre-requisites===
-  * Ant 1.6.5+
+===Pre-requisites===
   * Java 5+
+  * Ant 1.6.5+
+
+===Running ddljen===
+
+Todo
+
+
+====Running ddljen from Ant====
+
+Todo
+
+
+====Running ddljen from Java====
+
+Todo
