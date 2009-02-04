@@ -86,7 +86,7 @@ public class DDLJen {
 
 	private Schema readSchema(File file) throws DDLJenException {
 		Schema s = SchemaReader.read(file);
-		System.out.println("Schema: " + s.toString());
+		//System.out.println("Schema: " + s.toString());
 		return s;
 	}
 
