@@ -5,6 +5,16 @@ Todo
   * Java 5+
   * Ant 1.6.5+
 
+
+===Installing ddljen===
+
+To install ddljen:
+
+  # Download the latest version of ddljen
+  # Unzip the distribution archive (ddljen-x.x.zip) to the directory you wish to install ddljen. The subdirectory ddljen-x.x will be created from the archive. These instructions will refer to this directory as DDLJEN_HOME.
+  # To verify that ddljen was correctly installed, run `ant` from the command line. ddljen should start to generate the SQL file for the sample database schema. 
+  
+
 ===Running ddljen===
 
 Todo
@@ -12,7 +22,7 @@ Todo
 
 ====Running ddljen from Ant====
 
-Todo
+ddljen can be run from Ant using ddljen's Ant task. An example of how to use 
 
 
 ====Running ddljen from Java====
