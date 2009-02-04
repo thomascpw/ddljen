@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<schema>
+
+<!--
+	features exposed:
+	table, column, pk, fk, unique constraint, varchar, integer, decimal, null(able), named constraints (for pk, fk and unique)
+	-->
+	
+	<table name="category">
+		<column name="categoryid" type="varchar" size="10" nullable="false"/>
+		<column name="name" type="varchar" size="25" nullable="false"/>
+		<column name="description" type="varchar" size="255" nullable="false"/>
+		<column name="imageurl" type="varchar" size="55"/>
+		<primary-key name="pk_category">
+			<column-ref name="categoryid"/>
+		</primary-key>
+	</table>
+
+	<table name="product">
+		<column name="productid" type="varchar" size="10" nullable="false"/>
+		<column name="categoryid" type="varchar" size="10" nullable="false"/>
+		<column name="name" type="varchar" size="25" nullable="false"/>
+		<column name="description" type="varchar" size="255" nullable="false"/>
+		<column name="imageurl" type="varchar" size="55"/>
+		<primary-key name="pk_product">
+			<column-ref name="productid"/>
+		</primary-key>
+		<foreign-key name="product_fk_categoryid">
+			<local-column-ref name="categoryid"/>
+			<foreign-column-ref table="category" name="categoryid"/>
+		</foreign-key>
+	</table>
+
+	<table name="address">
+		<column name="addressid" type="varchar" size="10" nullable="false"/>
+		<column name="street1" type="varchar" size="55" nullable="false"/>
+		<column name="street2" type="varchar" size="55"/>
+		<column name="city" type="varchar" size="55" nullable="false"/>
+		<column name="state" type="varchar" size="25" nullable="false"/>
+		<column name="zip" type="varchar" size="5" nullable="false"/>
+		<column name="latitude" type="decimal" size="14" precision="10" nullable="false"/>
+		<column name="longitude" type="decimal" size="14" precision="10" nullable="false"/>
+		<primary-key name="pk_address">
+			<column-ref name="addressid"/>
+		</primary-key>
+	</table>
+
+	<table name="sellercontactinfo">
+		<column name="contactinfoid" type="varchar" size="10" nullable="false"/>
+		<column name="lastname" type="varchar" size="24" nullable="false"/>
+		<column name="firstname" type="varchar" size="24" nullable="false"/>
+		<column name="email" type="varchar" size="24" nullable="false"/>
+		<primary-key name="pk_sellercontactinfo">
+			<column-ref name="contactinfoid"/>
+		</primary-key>
+	</table>
+
+	<table name="item">
+		<column name="itemid" type="varchar" size="10" nullable="false"/>
+		<column name="productid" type="varchar" size="10" nullable="false"/>
+		<column name="name" type="varchar" size="30" nullable="false"/>
+		<column name="description" type="varchar" size="500" nullable="false"/>
+		<column name="imageurl" type="varchar" size="55"/>
+		<column name="imagethumburl" type="varchar" size="55"/>
+		<column name="price" type="decimal" size="14" precision="2" nullable="false"/>
+		<column name="address_addressid" type="varchar" size="10" nullable="false"/>
+		<column name="contactinfo_contactinfoid" type="varchar" size="10" nullable="false"/>
+		<column name="totalscore" type="integer" nullable="false"/>
+		<column name="numberofvotes" type="integer" nullable="false"/>
+		<column name="disabled" type="integer" nullable="false"/>
+		<primary-key name="pk_item">
+			<column-ref name="itemid"/>
+		</primary-key>
+		<foreign-key name="item_fk_addressid">
+			<local-column-ref name="address_addressid"/>
+			<foreign-column-ref table="address" name="addressid"/>
+		</foreign-key>
+		<foreign-key name="item_fk_productid">
+			<local-column-ref name="productid"/>
+			<foreign-column-ref table="product" name="productid"/>
+		</foreign-key>
+		<foreign-key name="item_fk_contactinfoid">
+			<local-column-ref name="contactinfo_contactinfoid"/>
+			<foreign-column-ref table="sellercontactinfo" name="contactinfoid"/>
+		</foreign-key>
+	</table>
+	
+	<table name="id_gen">
+		<column name="gen_key" type="varchar" size="20" nullable="false"/>
+		<column name="gen_value" type="integer" nullable="false"/>
+		<primary-key name="pk_id_gen">
+			<column-ref name="gen_key"/>
+		</primary-key>
+	</table>
+
+	<table name="ziplocation">
+		<column name="zipcode" type="integer" nullable="false"/>
+		<column name="city" type="varchar" size="30" nullable="false"/>
+		<column name="state" type="varchar" size="2" nullable="false"/>
+		<primary-key name="pk_ziplocation">
+			<column-ref name="zipcode"/>
+		</primary-key>
+	</table>
+
+	<table name="tag">
+		<column name="tagid" type="integer" nullable="false"/>
+		<column name="tag" type="varchar" size="30" nullable="false"/>
+		<column name="refcount" type="integer" nullable="false"/>
+		<primary-key name="pk_tag">
+			<column-ref name="tagid"/>
+		</primary-key>
+		<unique-constraint name="un_tag_tag">
+			<column-ref name="tag"/>
+		</unique-constraint>
+	</table>
+
+	<table name="tag_item">
+		<column name="tagid" type="integer" nullable="false"/>
+		<column name="itemid" type="varchar" size="10" nullable="false"/>
+		<unique-constraint name="un_tag_item">
+			<column-ref name="tagid"/>
+			<column-ref name="itemid"/>
+		</unique-constraint>
+		<foreign-key name="tag_item_fk_itemid">
+			<local-column-ref name="itemid"/>
+			<foreign-column-ref table="item" name="itemid"/>
+		</foreign-key>
+		<foreign-key name="tag_item_fk_tagid">
+			<local-column-ref name="tagid"/>
+			<foreign-column-ref table="tag" name="tagid"/>
+		</foreign-key>
+	</table>
+
+</schema>
+
+<!--
+	
+
+CREATE TABLE Address (
+...
+ latitude DECIMAL(14,10) NOT NULL,
+ longitude DECIMAL(14,10) NOT NULL,
+...
+);
+
+CREATE TABLE item (
+...
+ price DECIMAL(14,2) NOT NULL,
+...
+);
+
+
+-->
