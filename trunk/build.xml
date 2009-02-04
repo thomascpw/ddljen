@@ -97,7 +97,7 @@
 		depends="jar">
 		<copy file="build-ddljen.xml" tofile="${dist.dir}/build.xml"/>
 		<copy todir="${dist.dir}">
-			<fileset dir="${basedir}" includes="test*.xml"/>			
+			<fileset dir="${basedir}" includes="test*.xml, *petstore*.xml"/>			
 			<fileset dir="${basedir}" includes="LICENSE.txt"/>			
 		</copy>
 		<copy todir="${dist.dir}/lib">

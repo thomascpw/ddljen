@@ -9,9 +9,9 @@
 				</fileset>
 			</classpath>
 		</taskdef>
-		<ddljen database="mysql" destFile="./ddljen-out.sql">
+		<ddljen database="mysql" destFile="./java-petstore-2.0.sql">
 			<fileset dir=".">
-				<include name="test-casis.xml"/>
+				<include name="java-petstore-2.0.xml"/>
 			</fileset>
 		</ddljen>
 	</target>
