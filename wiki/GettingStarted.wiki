@@ -8,12 +8,15 @@ Todo
 
 ===Installing ddljen===
 
-To install ddljen:
-
-  # Download the latest version of ddljen
+  # Download the latest version of ddljen.
   # Unzip the distribution archive (ddljen-x.x.zip) to the directory you wish to install ddljen. The subdirectory ddljen-x.x will be created from the archive. These instructions will refer to this directory as DDLJEN_HOME.
-  # To verify that ddljen was correctly installed, run `ant` from the command line. ddljen should start to generate the SQL file for the sample database schema. 
+  # To verify that ddljen was correctly installed, type `ant` at the command line from the DDLJEN_HOME directory. ddljen should generate the SQL file for the sample database schema that is provided (java-petstore-2.0.xml). 
   
+
+===Defining your database schema===
+
+Todo
+
 
 ===Running ddljen===
 
@@ -22,9 +25,9 @@ Todo
 
 ====Running ddljen from Ant====
 
-ddljen can be run from Ant using ddljen's Ant task. An example of how to use 
+Todo: ddljen can be run from Ant using ddljen's Ant task. An example of how to use 
 
 
 ====Running ddljen from Java====
 
-Todo
+Todo: java -jar lib/ddljen-x.x.jar -db mysql -f java-petstore-2.0.xml -o java-petstore-2.0.sql
