@@ -89,8 +89,8 @@ public class SchemaReader {
 				column.setDataType(dataType);
 				if (isNullable != null) column.setNullable(isNullable.booleanValue());
 				if (isUnique != null) column.setUnique(isUnique.booleanValue());
-				if (isAutoIncreement != null) column.setAutoIncrement(isAutoIncreement.booleanValue())
-;				column.setDescription(desc);
+				if (isAutoIncreement != null) column.setAutoIncrement(isAutoIncreement.booleanValue());			
+				column.setDescription(desc);
 				if (columns == null) columns = new ArrayList();
 				columns.add(column);
 			}
