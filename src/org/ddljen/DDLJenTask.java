@@ -10,6 +10,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 
+// TODO: add file, destDir
 public class DDLJenTask extends Task {
 
 	private List fileSets = new ArrayList();

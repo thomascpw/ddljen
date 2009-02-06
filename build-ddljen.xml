@@ -9,7 +9,7 @@
 				</fileset>
 			</classpath>
 		</taskdef>
-		<ddljen database="mysql" destFile="./java-petstore-2.0.sql">
+		<ddljen database="mysql">
 			<fileset dir=".">
 				<include name="java-petstore-2.0.xml"/>
 			</fileset>
