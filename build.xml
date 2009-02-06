@@ -59,6 +59,7 @@
 	<target name="copy-resources">
 		<copy todir="${build.classes.dir}">
 			<fileset dir="${src.java.dir}" includes="**/*.xml"/>
+			<fileset dir="${src.java.dir}" includes="**/*.xsd"/>
 			<fileset dir="${src.java.dir}" includes="**/*.properties"/>
 			<fileset dir="${src.java.dir}" includes="**/*.vm"/>
 		</copy>
@@ -73,6 +74,8 @@
 				<attribute name="Implementation-Title" value="ddljen" />
 				<attribute name="Implementation-Version" value="${ddljen.version}" />
 				<attribute name="Implementation-Vendor" value="ddljen" />
+				<attribute name="Main-Class" value="org.ddljen.DDLJen" />
+				<attribute name="Class-Path" value="ant-1.6.5.jar commons-beanutils-1.7.0.jar commons-betwixt-0.7.jar commons-cli-1.0.jar commons-collections-3.1.jar commons-digester-1.7.jar commons-lang-2.0.jar commons-logging-1.0.4.jar ddljen-0.1.jar dom4j-1.6.1.jar jaxen-1.0-FCS-full.jar log4j-1.2.13.jar saxpath-1.0-FCS.jar velocity-1.4.jar" />				
 			</manifest>
 		</jar>
 	</target>
@@ -99,6 +102,7 @@
 		<copy todir="${dist.dir}">
 			<fileset dir="${basedir}" includes="*petstore*.xml"/>			
 			<fileset dir="${basedir}" includes="LICENSE.txt"/>			
+			<fileset dir="${src.java.dir}/org/ddljen" includes="ddljen.xsd"/>			
 		</copy>
 		<copy todir="${dist.dir}/lib">
 			<fileset dir="${lib.dir}" includes="*.jar"/>

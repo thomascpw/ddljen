@@ -1,6 +1,7 @@
 package org.ddljen;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,17 +9,35 @@ import java.util.List;
 import org.dom4j.Document;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
 
 public class SchemaReader {
+
+	private static final String DDLJEN_XSD = "ddljen.xsd";
 
 	public static Schema read(File xmlSchema) throws DDLJenException {
 		
 		Schema schema = new Schema();
 		
 		try {
-			
-			SAXReader reader = new SAXReader();
-	        	Document document = reader.read(xmlSchema);
+
+				SAXReader reader = new SAXReader();
+				
+				// load xsd from the classpath
+				// this xsd is used to validate the XML database schema definition provided by the user
+			    InputStream xsdStream = SchemaReader.class.getResourceAsStream(DDLJEN_XSD);
+			    if (xsdStream != null) {
+			    	// turn on XML schema validation
+					reader.setValidation(true);
+					reader. setFeature("http://apache.org/xml/features/validation/schema", true);
+					reader.setProperty("http://java.sun.com/xml/jaxp/properties/schemaLanguage", "http://www.w3.org/2001/XMLSchema");
+					reader.setEntityResolver(new InputStreamEntityResolver(DDLJEN_XSD, xsdStream));			    	
+			    } else {
+			    	System.out.println("Cannot find ddljen.xsd: disabling validation of ddljen's XML database schema definition");
+			    }
+				 
+				Document document = reader.read(xmlSchema);
 	        	List sequenceNodes = document.selectNodes("//sequence");
 	        	if (sequenceNodes != null) {
 	        		Iterator i = sequenceNodes.iterator();
@@ -199,5 +218,25 @@ public class SchemaReader {
 			else b = Boolean.FALSE;
 		}
 		return b;
+	}
+
+}
+
+class InputStreamEntityResolver implements EntityResolver {
+
+	private String systemId;
+	private InputStream stream;
+
+	public InputStreamEntityResolver(String systemId, InputStream stream) {
+	this.systemId = systemId;
+	this.stream = stream;
+	}
+
+	public InputSource resolveEntity(String publicId, String systemId) {
+	InputSource result = null;
+	if (systemId.contains(this.systemId)) {
+	result = new InputSource(stream);
+	}
+	return result;
 	}
 }
