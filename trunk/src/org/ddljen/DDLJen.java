@@ -14,6 +14,10 @@ import org.apache.commons.cli.Options;
 
 public class DDLJen {
 
+	private static final String DEFAULT_SOURCE_FILE_EXTENSION = ".xml";
+
+	private static final String DEFAULT_DEST_FILE_EXTENSION = ".sql";
+
 	/**
 	 * @param args
 	 * @throws DDLJenException 
@@ -24,9 +28,28 @@ public class DDLJen {
 		DDLJen.run(options.getSchemaFile(), options.getDialect(), options.mustDrop(), options.getDestFile());
 	}
 
+	public static void run(File schemaFile, SQLDialect dialect) throws DDLJenException {
+		DDLJen.run(schemaFile, dialect, false, null);	
+	}
+
+	public static void run(String schemaFile, SQLDialect dialect) throws DDLJenException {
+		File s = new File(schemaFile);
+		DDLJen.run(s, dialect, false, null);	
+	}
+
+	public static void run(File schemaFile, SQLDialect dialect, boolean drop) throws DDLJenException {
+		DDLJen.run(schemaFile, dialect, drop, null);	
+	}
+
+	public static void run(String schemaFile, SQLDialect dialect, boolean drop) throws DDLJenException {
+		File s = new File(schemaFile);
+		DDLJen.run(s, dialect, drop, null);	
+	}
+
 	public static void run(String schemaFile, SQLDialect dialect, boolean drop, String destFile) throws DDLJenException {
 		File s = new File(schemaFile);
-		File d = new File(destFile);
+		File d = null;
+		if (destFile != null) d = new File(destFile);
 		DDLJen.run(s, dialect, drop, d);	
 	}
 
@@ -34,7 +57,23 @@ public class DDLJen {
 		DDLJen ddljen = new DDLJen();
 		Schema s = ddljen.readSchema(schemaFile);
 		ddljen.mapTypes(s, dialect);
+		if (destFile == null) {
+			destFile = new File(
+					replaceFileExtension(schemaFile, DEFAULT_SOURCE_FILE_EXTENSION, DEFAULT_DEST_FILE_EXTENSION));
+		}
 		ddljen.generateSQL(s, dialect, drop, destFile);
+	}
+
+	private static String replaceFileExtension(File schemaFile, String extensionToReplace, String newExtension) {
+		String name;
+		try {
+			name = schemaFile.getCanonicalPath();
+		} catch (IOException e) {
+			name = schemaFile.getName();
+		}
+		if (name.endsWith(extensionToReplace)) name = name.substring(0, name.length() - extensionToReplace.length());
+		name = name + newExtension;
+		return name;
 	}
 
 	private DDLJenOptions parseCommandLine(String[] args) {
@@ -42,7 +81,7 @@ public class DDLJen {
 		addOption(options, "f", "file", "ddljen xml file", "file", true);
 		addOption(options, "db", "database", "database", "database", true);
 		addOption(options, "v", "version", "database version", "version", false);
-		addOption(options, "o", "output", "output file", "file", true);
+		addOption(options, "o", "output", "output file", "file", false);
 		addOption(options, "drop", "drop", "drop tables before creating them", null, false);
 		
 		DDLJenOptions ddljenOptions = new DDLJenOptions();
