@@ -10,6 +10,7 @@ Use this list as a starting point if you plan to contribute to ddljen. Wether yo
     # write getting started guide
   * migrate to java 5?? or keep java 1.4 compatibility
   * replace System.out.println by logging
+  * Use MySQL sakila sample database as an example of how to use ddljen
   * add more log messages (input file, target database, number of schema objects?, etc.)
   * check mapping of numeric types (number, integer, numeric, etc.)
   * add support for indexes
